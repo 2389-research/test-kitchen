@@ -10,6 +10,7 @@ Parallel implementation framework with two gate skills:
 ## Installation
 
 ```bash
+/plugin marketplace add 2389-research/claude-plugins
 /plugin install test-kitchen@2389-research
 ```
 
