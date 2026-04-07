@@ -1,5 +1,9 @@
 # Test Kitchen
 
+You have a spec. Three valid approaches exist. Instead of guessing which one to build, Test Kitchen builds all of them in parallel git worktrees and lets your tests pick the winner.
+
+Read more: [Cookoff: Same Spec, Different Code](https://2389.ai/posts/cookoff-same-spec-different-code/) · [Omakase: Show Me](https://2389.ai/posts/omakase-show-me/)
+
 Parallel implementation framework with two gate skills:
 
 | Skill | Gate | Trigger |
@@ -148,3 +152,9 @@ Test Kitchen orchestrates these skills (falls back gracefully if not installed):
 ## Origin
 
 Named after a restaurant test kitchen, where chefs try multiple approaches before putting a dish on the menu.
+
+---
+
+If Test Kitchen saved you from building the wrong approach first, a ⭐ helps us know it's landing.
+
+Built by [2389](https://2389.ai) · Part of the [Claude Code plugin marketplace](https://github.com/2389-research/claude-plugins)
