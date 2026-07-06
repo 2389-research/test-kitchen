@@ -1,6 +1,6 @@
 ---
 name: test-kitchen
-description: This skill should be used when implementing features with parallel exploration or competition. Triggers on "build", "create", "implement", "try both approaches", "compare implementations". Routes to omakase-off (entry gate for design exploration) or cookoff (exit gate for parallel implementation).
+description: Intercepts any build/create/implement request and routes to omakase-off (parallel design exploration entry gate) or cookoff (parallel implementation competition exit gate), letting tests pick the winner. Use on any "build X", "create Y", "implement Z", "try both approaches", or "compare implementations" request — this is an aggressive entry gate that intercepts all such requests to offer design exploration and parallel implementation options.
 ---
 
 # Test Kitchen

@@ -1,6 +1,6 @@
 ---
 name: judge
-description: Scoring framework for test-kitchen cookoff and omakase-off. Invoked at Phase 4 to evaluate implementations using 5-criteria scoring. Do not invoke directly - called by cookoff/omakase-off.
+description: Scoring framework for test-kitchen cookoff and omakase-off. Invoked at Phase 4 to evaluate implementations using 5-criteria scoring. Do not invoke directly — called by `test-kitchen:cookoff` and `test-kitchen:omakase-off`.
 ---
 
 # Test Kitchen Judge

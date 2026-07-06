@@ -1,6 +1,6 @@
 ---
 name: cookoff
-description: This skill should be used when moving from design to implementation. Triggers on "let's build", "implement this", "looks good let's code", "ready to implement". Presents options for parallel agent competition (cookoff), single subagent, or local implementation. Each agent creates own plan from shared design for genuine variation.
+description: Runs parallel implementation competition at the design→implementation transition: dispatches 2-5 agents that each create their own plan from the shared design, then tests and the judge pick the winner. Use when design is complete and implementation is about to start — "let's build", "implement this", "looks good let's code", "ready to implement", or after a design doc is committed.
 ---
 
 # Cookoff
@@ -27,22 +27,6 @@ docs/plans/<feature>/
       plan.md                  # Agent 3's implementation plan
     result.md                  # Cookoff results and winner
 ```
-
-## Skill Dependencies
-
-| Reference | Primary (if installed) | Fallback |
-|-----------|------------------------|----------|
-| `writing-plans` | `superpowers:writing-plans` | Each agent writes their own implementation plan |
-| `executing-plans` | `superpowers:executing-plans` | Execute plan tasks sequentially with verification |
-| `parallel-agents` | `superpowers:dispatching-parallel-agents` | Dispatch multiple Task tools in single message |
-| `git-worktrees` | `superpowers:using-git-worktrees` | `git worktree add .worktrees/<name> -b <branch>` |
-| `tdd` | `superpowers:test-driven-development` | RED-GREEN-REFACTOR cycle |
-| `verification` | `superpowers:verification-before-completion` | Run command, read output, THEN claim status |
-| `fresh-eyes` | `fresh-eyes-review:skills` (2389) | 2-5 min review for security, logic, edge cases |
-| `judge` | `test-kitchen:judge` | Scoring framework with checklists (MUST invoke at Phase 4) |
-| `code-review` | `superpowers:requesting-code-review` | Dispatch code-reviewer subagent |
-| `scenario-testing` | `scenario-testing:skills` (2389) | `.scratch/` E2E scripts, real dependencies |
-| `finish-branch` | `superpowers:finishing-a-development-branch` | Verify tests, present options, cleanup |
 
 ## When to Use
 
@@ -161,36 +145,7 @@ Use `parallel-agents` pattern. Send ONE message with multiple Task tool calls:
 
 Do NOT send separate messages for each agent.
 
-**Subagent prompt (each gets same instructions with their impl number):**
-
-```
-You are implementation team N of M in a cookoff competition.
-Other teams are implementing the same design in parallel.
-Each team creates their own implementation plan - your approach may differ from others.
-
-**Your working directory:** /path/to/.worktrees/cookoff-impl-N
-**Design doc:** docs/plans/<feature>/design.md
-**Your plan location:** docs/plans/<feature>/cookoff/impl-N/plan.md
-
-**Your workflow:**
-1. Read the design doc thoroughly
-2. Use writing-plans skill to create YOUR implementation plan
-   - Save to: docs/plans/<feature>/cookoff/impl-N/plan.md
-   - Make your own architectural decisions
-   - Don't try to guess what other teams will do
-3. Use executing-plans skill to implement your plan
-4. Follow TDD for each task
-5. Use verification before claiming done
-
-**Report when done:**
-- Plan created: yes/no
-- All tasks completed: yes/no
-- Test results (npm test output)
-- Files changed count
-- Any issues encountered
-
-Your goal: best possible implementation. Good luck!
-```
+**Subagent prompt:** See `references/phase3-subagent-prompt.md` for the full template (each agent gets the same instructions with their impl number substituted).
 
 **Monitor progress:**
 ```
@@ -273,51 +228,23 @@ git branch -D <feature>/cookoff/impl-3
 # Keep winner's worktree until merged
 ```
 
-**Write result.md:**
-```markdown
-# Cookoff Results: <feature>
-
-## Design
-docs/plans/<feature>/design.md
-
-## Implementations
-| Impl | Plan Approach | Tests | Fresh-Eyes | Lines | Result |
-|------|---------------|-------|------------|-------|--------|
-| impl-1 | Component-first | 24/24 | 1 minor | 680 | eliminated |
-| impl-2 | Data-layer-first | 22/22 | 0 issues | 720 | WINNER |
-| impl-3 | TDD-strict | 26/26 | 2 minor | 590 | eliminated |
-
-## Plans Generated
-- impl-1: docs/plans/<feature>/cookoff/impl-1/plan.md
-- impl-2: docs/plans/<feature>/cookoff/impl-2/plan.md
-- impl-3: docs/plans/<feature>/cookoff/impl-3/plan.md
-
-## Winner Selection
-Reason: Clean fresh-eyes review, solid data-layer-first architecture
-
-## Cleanup
-Worktrees removed: 2
-Branches deleted: <feature>/cookoff/impl-1, <feature>/cookoff/impl-3
-Winner branch: <feature>/cookoff/impl-2
-```
-
-Save to: `docs/plans/<feature>/cookoff/result.md`
+**Write result.md:** See `references/phase5-result-template.md` for the full template. Save to: `docs/plans/<feature>/cookoff/result.md`
 
 ## Skills Orchestrated
 
-| Dependency | Phase | Usage |
-|------------|-------|-------|
-| `writing-plans` | 3 | Each subagent creates their own implementation plan |
-| `executing-plans` | 3 | Each subagent implements their plan |
-| `parallel-agents` | 3 | Dispatch ALL subagents in SINGLE message |
-| `git-worktrees` | 3 | Create worktree per implementation |
-| `tdd` | 3 | Subagents follow RED-GREEN-REFACTOR |
-| `verification` | 3, 5 | Before claiming done; before declaring winner |
-| `code-review` | 3 | Review each impl after completion |
-| `fresh-eyes` | 4 | Quality review → judge input |
-| `judge` | 4 | **INVOKE** for scoring framework (loads fresh, ensures format compliance) |
-| `scenario-testing` | 4 | Validate if scenarios defined |
-| `finish-branch` | 5 | Handle winner, cleanup losers |
+| Skill | Phase | Purpose | Fallback |
+|-------|-------|---------|---------|
+| `superpowers:writing-plans` | 3 | Each subagent creates their own implementation plan | Each agent writes own plan directly |
+| `superpowers:executing-plans` | 3 | Each subagent implements their plan | Execute plan tasks sequentially with verification |
+| `superpowers:dispatching-parallel-agents` | 3 | Dispatch ALL subagents in SINGLE message | Multiple Task tool calls in one message |
+| `superpowers:using-git-worktrees` | 3 | Create worktree per implementation | `git worktree add .worktrees/<name> -b <branch>` |
+| `superpowers:test-driven-development` | 3 | Subagents follow RED-GREEN-REFACTOR | RED-GREEN-REFACTOR cycle manually |
+| `superpowers:verification-before-completion` | 3, 5 | Before claiming done; before declaring winner | Run command, read output, THEN claim status |
+| `superpowers:requesting-code-review` | 3 | Review each impl after completion | Dispatch code-reviewer subagent |
+| `fresh-eyes-review:fresh-eyes-review` | 4 | Quality review → judge input | 2-5 min review for security, logic, edge cases |
+| `test-kitchen:judge` | 4 | **INVOKE** for scoring framework (loads fresh, ensures format compliance) | Scoring framework with checklists |
+| `scenario-testing:scenario-testing` | 4 | Validate if scenarios defined | `.scratch/` E2E scripts, real dependencies |
+| `superpowers:finishing-a-development-branch` | 5 | Handle winner, cleanup losers | Verify tests, present options, cleanup |
 
 ## Common Mistakes
 
