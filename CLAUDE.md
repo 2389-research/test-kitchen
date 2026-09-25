@@ -203,8 +203,8 @@ Both skills orchestrate these (uses fallbacks if not installed):
 | `superpowers:using-git-worktrees` | Create worktree per variant/implementation |
 | `superpowers:test-driven-development` | Agents follow RED-GREEN-REFACTOR |
 | `superpowers:verification-before-completion` | Run command, read output, THEN claim status |
-| `scenario-testing:skills` | Real E2E validation |
-| `fresh-eyes-review:skills` | Quality gate before comparison |
+| `scenario-testing:scenario-testing` | Real E2E validation |
+| `fresh-eyes-review:fresh-eyes-review` | Quality gate before comparison |
 | `superpowers:finishing-a-development-branch` | Handle winner, cleanup losers |
 
 ## Common Mistakes to Avoid

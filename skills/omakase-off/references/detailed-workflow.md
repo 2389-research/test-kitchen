@@ -12,9 +12,9 @@ This skill orchestrates other skills. Check what's installed and use fallbacks i
 | `parallel-agents` | `superpowers:dispatching-parallel-agents` | Dispatch multiple Task tools in single message, review when all return |
 | `subagent-dev` | `superpowers:subagent-driven-development` | Fresh subagent per task, code review between tasks |
 | `tdd` | `superpowers:test-driven-development` | Write test first, watch fail, write minimal code, refactor |
-| `scenario-testing` | `scenario-testing:skills` (2389) | Create `.scratch/` E2E scripts, real dependencies, no mocks |
+| `scenario-testing` | `scenario-testing:scenario-testing` (2389) | Create `.scratch/` E2E scripts, real dependencies, no mocks |
 | `verification` | `superpowers:verification-before-completion` | Run verification command, read output, THEN claim status |
-| `fresh-eyes` | `fresh-eyes-review:skills` (2389) | 2-5 min review for security, logic errors, edge cases |
+| `fresh-eyes` | `fresh-eyes-review:fresh-eyes-review` (2389) | 2-5 min review for security, logic errors, edge cases |
 | `judge` | `test-kitchen:judge` | Scoring framework with checklists (MUST invoke at Phase 4) |
 | `code-review` | `superpowers:requesting-code-review` | Dispatch code-reviewer subagent with SHA range |
 | `finish-branch` | `superpowers:finishing-a-development-branch` | Verify tests, present options (merge/PR/keep/discard) |

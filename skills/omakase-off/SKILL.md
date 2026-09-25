@@ -1,6 +1,6 @@
 ---
 name: omakase-off
-description: This skill should be used as the entry gate for build/create/implement requests. Triggers on "build X", "create Y", "implement Z", "add feature", "try both approaches", "not sure which approach". Offers brainstorm-together or omakase (chef's choice parallel exploration) options. Detects indecision during brainstorming to offer parallel exploration.
+description: Intercepts build/create/implement requests as an entry gate and offers a choice between brainstorming together or omakase (chef's choice parallel design exploration across 3-5 approaches), then dispatches parallel agents and lets tests pick the winner. Use on any "build X", "create Y", "implement Z", "add feature", or indecision signal ("not sure which approach", "try both") — this skill intercepts all such requests to ensure design exploration is offered before implementation begins.
 ---
 
 # Omakase-Off
@@ -9,7 +9,7 @@ Chef's choice exploration - when you're not sure WHAT to build, explore differen
 
 **Part of Test Kitchen Development:**
 - `omakase-off` - Chef's choice exploration (different approaches/plans)
-- `cookoff` - Same recipe, multiple cooks compete (same plan, multiple implementations)
+- `cookoff` - Same design, multiple cooks compete (each creates its own plan from the shared design)
 
 **Core principle:** Let indecision emerge naturally during brainstorming, then implement multiple approaches in parallel to let real code + tests determine the best solution.
 
@@ -108,6 +108,7 @@ Only architectural decisions become slots for parallel exploration.
 | `parallel-agents` | Dispatch all variant subagents in parallel |
 | `scenario-testing` | Run same scenarios against all variants |
 | `fresh-eyes` | Quality review on survivors → input for judge |
+| `judge` (`test-kitchen:judge`) | **REQUIRED** Phase 4 scoring — invoke fresh to evaluate survivors with 5-criteria framework |
 | `finish-branch` | Handle winner (merge/PR), cleanup losers |
 
 ## Example Flow
