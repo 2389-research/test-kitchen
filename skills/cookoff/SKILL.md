@@ -1,6 +1,7 @@
 ---
 name: cookoff
-description: Runs parallel implementation competition at the design→implementation transition: dispatches 2-5 agents that each create their own plan from the shared design, then tests and the judge pick the winner. Use when design is complete and implementation is about to start — "let's build", "implement this", "looks good let's code", "ready to implement", or after a design doc is committed.
+description: >-
+  Runs parallel implementation competition at the design→implementation transition: dispatches 2-5 agents that each create their own plan from the shared design, then tests and the judge pick the winner. Use when design is complete and implementation is about to start — "let's build", "implement this", "looks good let's code", "ready to implement", or after a design doc is committed.
 ---
 
 # Cookoff
