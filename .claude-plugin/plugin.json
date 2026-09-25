@@ -1,6 +1,6 @@
 {
   "name": "test-kitchen",
   "description": "Intercepts build/create/implement requests to offer parallel design exploration (omakase-off) and parallel implementation competition (cookoff) — runs multiple variants simultaneously and lets tests and the judge pick the winner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "commands": []
 }
